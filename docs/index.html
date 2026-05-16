@@ -1,9 +1,332 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><title>Fluvius</title></head>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fluvius — Real-time Geospatial Stream Processing</title>
+<style>
+  :root { --accent: #0ea5e9; --bg: #0f172a; --surface: #1e293b; --text: #e2e8f0; --muted: #94a3b8; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  header { text-align: center; padding: 4rem 0 3rem; }
+  header h1 { font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  header p { font-size: 1.25rem; color: var(--muted); margin-top: 0.5rem; }
+  .badges { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap; }
+  .badge { background: var(--surface); border: 1px solid #334155; border-radius: 999px; padding: 0.25rem 0.75rem; font-size: 0.8rem; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .card { background: var(--surface); border: 1px solid #334155; border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s; }
+  .card:hover { border-color: var(--accent); }
+  .card h3 { color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .card p { color: var(--muted); font-size: 0.9rem; }
+  .card ul { list-style: none; margin-top: 0.75rem; }
+  .card ul li { color: var(--muted); font-size: 0.85rem; padding: 0.2rem 0; }
+  .card ul li::before { content: "→ "; color: var(--accent); }
+  section { margin-top: 3rem; }
+  section h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+  .arch { background: var(--surface); border: 1px solid #334155; border-radius: 12px; padding: 2rem; margin-top: 1rem; }
+  .arch pre { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; overflow-x: auto; }
+  .cta { text-align: center; margin-top: 3rem; padding: 2rem; }
+  .cta a { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; transition: opacity 0.2s; }
+  .cta a:hover { opacity: 0.85; }
+  footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem; border-top: 1px solid #334155; margin-top: 3rem; }
+  code { background: #334155; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+  .compare { margin-top: 2rem; }
+  .compare table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .compare th, .compare td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
+  .compare th { color: var(--accent); }
+  .compare td:first-child { font-weight: 600; }
+  .yes { color: #4ade80; }
+  .no { color: #f87171; }
+</style>
+</head>
 <body>
-<h1>Fluvius</h1>
-<p>Real-time geospatial stream processing engine.</p>
-<p><a href="https://github.com/TileTopia-HQ/fluvius">Source Code</a></p>
+<div class="container">
+<header>
+  <h1>Fluvius</h1>
+  <p>Real-time geospatial stream processing. Zero JVM. Sub-MB footprint.</p>
+  <div class="badges">
+    <span class="badge">Rust</span>
+    <span class="badge">Tokio async</span>
+    <span class="badge">AGPL-3.0</span>
+    <span class="badge">4 crates</span>
+    <span class="badge">59 tests</span>
+    <span class="badge">Linux / macOS / Windows</span>
+  </div>
+</header>
+
+<div class="grid">
+  <div class="card">
+    <h3>R-tree Spatial Index</h3>
+    <p>Fast spatial queries over millions of entities in real-time.</p>
+    <ul>
+      <li>k-Nearest Neighbor queries</li>
+      <li>Bounding box search</li>
+      <li>Radius queries</li>
+      <li>Thread-safe concurrent updates</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Complex Event Processing</h3>
+    <p>Detect temporal and spatial patterns in event streams.</p>
+    <ul>
+      <li>Multi-step pattern sequences</li>
+      <li>Spatial constraints (near location X)</li>
+      <li>Configurable time windows</li>
+      <li>Per-entity state tracking</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Windowing Engine</h3>
+    <p>Four window types with event-time semantics.</p>
+    <ul>
+      <li>Tumbling windows</li>
+      <li>Sliding windows</li>
+      <li>Session windows (gap-based)</li>
+      <li>Count-based windows</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Watermarks &amp; Late Events</h3>
+    <p>Event-time processing with out-of-order tolerance.</p>
+    <ul>
+      <li>Configurable watermark delay</li>
+      <li>Late event detection</li>
+      <li>Tolerance thresholds</li>
+      <li>Processing-time fallback</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Geofence Operator</h3>
+    <p>Real-time geofence entry/exit detection.</p>
+    <ul>
+      <li>Multi-zone polygon support</li>
+      <li>Enter/exit/inside/outside events</li>
+      <li>Per-entity state tracking</li>
+      <li>Arbitrary polygon shapes</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Proximity Alerts</h3>
+    <p>Detect when entities are near each other.</p>
+    <ul>
+      <li>Configurable radius thresholds</li>
+      <li>Haversine distance calculation</li>
+      <li>Multi-entity tracking</li>
+      <li>Real-time alert emission</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Trajectory Analysis</h3>
+    <p>Analyze movement patterns of tracked entities.</p>
+    <ul>
+      <li>Speed calculation</li>
+      <li>Stop detection</li>
+      <li>Distance accumulation</li>
+      <li>Path smoothing</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Spatial Aggregation</h3>
+    <p>Real-time density grids, heatmaps, and clustering.</p>
+    <ul>
+      <li>Configurable grid cell size</li>
+      <li>Count / Sum / Mean / Max / Min</li>
+      <li>Unique entity counting</li>
+      <li>Threshold-based emission</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Map Matching</h3>
+    <p>Snap GPS points to a road network.</p>
+    <ul>
+      <li>Nearest-segment projection</li>
+      <li>Confidence scoring</li>
+      <li>Trajectory matching</li>
+      <li>Road attribute lookup</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Checkpointing</h3>
+    <p>Periodic state snapshots for crash recovery.</p>
+    <ul>
+      <li>Configurable checkpoint interval</li>
+      <li>Automatic garbage collection</li>
+      <li>State restore on startup</li>
+      <li>JSON-serialized snapshots</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Temporal Joins</h3>
+    <p>Correlate events across multiple streams.</p>
+    <ul>
+      <li>Inner and left-outer joins</li>
+      <li>Entity + time proximity matching</li>
+      <li>Configurable time windows</li>
+      <li>Automatic buffer expiration</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Replay Mode</h3>
+    <p>Replay historical data at configurable speed.</p>
+    <ul>
+      <li>Real-time (1x) playback</li>
+      <li>Multiplied speed (10x, 100x)</li>
+      <li>Max-speed (instant replay)</li>
+      <li>Timing-preserving inter-event delays</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Prometheus Metrics</h3>
+    <p>Built-in observability in exposition format.</p>
+    <ul>
+      <li>Events received/emitted/filtered/late</li>
+      <li>Average processing time</li>
+      <li>Atomic lock-free counters</li>
+      <li>/metrics HTTP endpoint</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Kafka Connector</h3>
+    <p>Enterprise event streaming integration.</p>
+    <ul>
+      <li>Consumer source (subscribe)</li>
+      <li>Producer sink (publish)</li>
+      <li>Consumer groups</li>
+      <li>rdkafka-ready interface</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>MQTT Connector</h3>
+    <p>IoT device integration via MQTT protocol.</p>
+    <ul>
+      <li>QoS 0/1/2 support</li>
+      <li>Subscriber source</li>
+      <li>Publisher sink</li>
+      <li>Authentication support</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Topology DSL (TOML)</h3>
+    <p>Declare pipelines without writing code.</p>
+    <ul>
+      <li>Sources: WebSocket, File, Kafka, MQTT</li>
+      <li>Sinks: File, Kafka, MQTT, stdout</li>
+      <li>Operators: filter, geofence, CEP, spatial_agg</li>
+      <li>Checkpoint + replay configuration</li>
+    </ul>
+  </div>
+</div>
+
+<section>
+  <h2>Architecture</h2>
+  <div class="arch">
+    <pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                         fluvius-cli                              │
+│  Commands: run │ serve │ geofence │ proximity │ trajectory      │
+├─────────────────────────────────────────────────────────────────┤
+│       fluvius-geo              │      fluvius-connectors         │
+│  Geofence │ Proximity         │  WebSocket │ File               │
+│  Trajectory │ Spatial Agg     │  Kafka │ MQTT                   │
+│  Map Matching                 │                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                        fluvius-core                              │
+│  Pipeline │ Operators │ Windows │ Watermarks │ State            │
+│  CEP │ Spatial Index │ Checkpoint │ Metrics │ Replay            │
+│  Temporal Joins │ Topology DSL                                  │
+└─────────────────────────────────────────────────────────────────┘
+    </pre>
+  </div>
+</section>
+
+<section class="compare">
+  <h2>How Fluvius Compares</h2>
+  <table>
+    <tr><th>Feature</th><th>Fluvius</th><th>Kafka Streams</th><th>Apache Flink</th><th>Esri GeoEvent</th></tr>
+    <tr><td>Native spatial operators</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+    <tr><td>R-tree spatial index</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>CEP + spatial</td><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+    <tr><td>Zero JVM</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>Single binary</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>Sub-MB memory</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>TOML topology DSL</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>Map matching</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>Checkpointing</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    <tr><td>Prometheus metrics</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td></tr>
+    <tr><td>Open source</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Quick Start</h2>
+  <div class="arch">
+    <pre>
+# Build from source
+git clone https://github.com/TileTopia-HQ/fluvius.git
+cd fluvius &amp;&amp; cargo build --release
+
+# Run with a TOML topology
+fluvius run --topology pipeline.toml
+
+# Or use individual commands
+fluvius geofence --input events.jsonl --zone "warehouse:10.0,20.0,0.01"
+fluvius proximity --input events.jsonl --radius 100.0
+fluvius trajectory --input events.jsonl
+    </pre>
+  </div>
+</section>
+
+<section>
+  <h2>Example Topology</h2>
+  <div class="arch">
+    <pre>
+[pipeline]
+name = "fleet-monitoring"
+
+[[pipeline.operators]]
+type = "geofence"
+name = "depot-zone"
+zones = [{ name = "depot", center = [10.0, 20.0], radius = 0.01 }]
+
+[[pipeline.operators]]
+type = "spatial_agg"
+name = "density"
+cell_size_deg = 0.1
+function = "count"
+threshold = 10
+
+[pipeline.source]
+type = "kafka"
+brokers = ["localhost:9092"]
+topic = "gps-events"
+group_id = "fluvius-fleet"
+
+[pipeline.sink]
+type = "mqtt"
+broker_url = "mqtt://localhost:1883"
+topic = "alerts/geofence"
+
+[pipeline.metrics]
+enabled = true
+port = 9090
+
+[pipeline.checkpoint]
+dir = "/var/lib/fluvius/checkpoints"
+interval_secs = 30
+max_retained = 5
+    </pre>
+  </div>
+</section>
+
+<div class="cta">
+  <a href="https://github.com/TileTopia-HQ/fluvius">View on GitHub</a>
+</div>
+
+<footer>
+  <p>Fluvius is part of the <strong>TileTopia-HQ</strong> geospatial open-source ecosystem.</p>
+  <p>AGPL-3.0-or-later &middot; Built with Rust &middot; Powered by Tokio</p>
+</footer>
+</div>
 </body>
 </html>
