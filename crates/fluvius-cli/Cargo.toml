@@ -1,0 +1,18 @@
+[package]
+name = "fluvius-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "fluvius"
+path = "src/main.rs"
+
+[dependencies]
+fluvius-core = { path = "../fluvius-core" }
+fluvius-geo = { path = "../fluvius-geo" }
+fluvius-connectors = { path = "../fluvius-connectors" }
+clap = { version = "4", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+geo = "0.29"
+serde_json = "1"

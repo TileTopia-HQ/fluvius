@@ -1,0 +1,17 @@
+[package]
+name = "fluvius-connectors"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+fluvius-core = { path = "../fluvius-core" }
+tokio = { version = "1", features = ["full"] }
+tokio-tungstenite = "0.26"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+async-trait = "0.1"
+futures = "0.3"
+
+[dev-dependencies]
+tempfile = "3"
