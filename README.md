@@ -4,7 +4,7 @@ Real-time geospatial stream processor. Sub-second latency processing for continu
 
 Zero JVM. Sub-MB footprint. Single binary.
 
-[Documentation](https://tiletopia-hq.github.io/fluvius/) · [GitHub](https://github.com/TileTopia-HQ/fluvius)
+[Documentation](https://geolang.github.io/fluvius/) · [GitHub](https://github.com/GeoLang/fluvius)
 
 ## Features
 
@@ -42,7 +42,7 @@ Zero JVM. Sub-MB footprint. Single binary.
 
 ```bash
 # Build from source
-git clone https://github.com/TileTopia-HQ/fluvius.git
+git clone https://github.com/GeoLang/fluvius.git
 cd fluvius && cargo build --release
 
 # Run with a TOML topology
