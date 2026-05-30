@@ -51,7 +51,7 @@ jobs:
           cd target/${{ matrix.target }}/release
           tar czf ../../../fluvius-${{ matrix.target }}.tar.gz fluvius
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: fluvius-${{ matrix.target }}
           path: fluvius-${{ matrix.target }}.tar.gz
